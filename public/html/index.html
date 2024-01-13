@@ -1,0 +1,579 @@
+<!-- index.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">  <link rel="stylesheet" href="../css/styles.css">
+  <title>Home</title>
+</head>
+<body class="bg-dark" style="color: aliceblue;">
+  <nav class="navbar navbar-expand-lg bg-light fixed-top">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="/"><strong>Strona domowa</strong></a>
+
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  Ciała niebieskie układu słonecznego
+                </a>
+                <ul class="dropdown-menu">
+                  <li><a class="dropdown-item" href="#slonce">Słońce</a></li>
+                  <li><a class="dropdown-item" href="#merkury">Merkury</a></li>
+                  <li><a class="dropdown-item" href="#wenus">Wenus</a></li>
+                  <li><a class="dropdown-item" href="#ziemia">Ziemia</a></li>
+                  <li><a class="dropdown-item" href="#mars">Mars</a></li>
+                  <li><a class="dropdown-item" href="#jowisz">Jowisz</a></li>
+                  <li><a class="dropdown-item" href="#saturn">Saturn</a></li>
+                  <li><a class="dropdown-item" href="#uran">Uran</a></li>
+                  <li><a class="dropdown-item" href="#neptun">Neptun</a></li>
+                  <li><a class="dropdown-item" href="#tabelaDanych">Tabela danych</a></li>
+                </ul>
+              </li>
+                <li class="nav-item">
+                <a href="/simulation" class="nav-link">Symulacja</a>
+                </li>
+                <li class="nav-item">
+                    <a href="/login" id="loginButton"class="nav-link">Zaloguj się</a>
+                </li>
+                <li class="nav-item">
+                    <a href="/register" id="registerButton" class="nav-link">Zarejestruj się</a>
+                </li>  
+                <li class="nav-item">
+                    <a href="/" class="nav-link" id="logoutButton" onclick="logout()">Wyloguj się</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+  <div class="container-sm mx-auto " style="margin-top: 80px;">
+    <h1 class="h1 text-center">Układ Słoneczny - czym jest i ogólne informacje</h1>
+    <br><br>
+    <div class="row">
+      <div class="col-md-6 resizable">
+        Jest to układ planetarny w Drodze Mlecznej, składający się ze Słońca i 
+        powiązanych z nim grawitacyjnie ciał niebieskich: ośmiu planet, co najmniej 205
+         ich księżyców, pięciu planet karłowatych i miliardów (a być może nawet bilionów)
+          małych ciał, do których zalicza się planetoidy, komety i meteoroidy, a także pył międzyplanetarny. 
+          Zbadane regiony Układu Słonecznego zawierają, licząc od Słońca: cztery planety skaliste (Merkury, 
+          Wenus, Ziemia, Mars), pas planetoid składający się z małych skalistych ciał, cztery zewnętrzne gazowe 
+          olbrzymy (Jowisz, Saturn, Uran, Neptun) oraz drugi pas składający się z obiektów skalno-lodowych, tak 
+          zwany Pas Kuipera. Za Pasem Kuipera znajduje się dysk rozproszony, dużo dalej heliopauza i w końcu 
+          hipotetyczny Obłok Oorta. Pięć obiektów zaliczonych do klasy planet karłowatych to: Ceres (największy 
+          obiekt w pasie planetoid), Pluton (do 24 sierpnia 2006 roku uznawany za 9. planetę Układu), Haumea, 
+          Makemake (drugi co do wielkości obiekt w Pasie Kuipera) i Eris (największy znany obiekt w dysku rozproszonym).
+          <br><br>
+      </div>
+      <div class="col-md-6 text-center  resizable">
+        <img src="../images/planety.jpg" class="img-fluid img-thumbnail" alt="Układ słoneczny" title="Układ słoneczny">
+        <p class="mt-2 custom-font">Układ słoneczny</p>
+      </div>
+  </div>
+  <br>
+    <div class="row">
+      <div class="col-md-6 text-center  resizable">
+        <img src="../images/srodek_ciezkosci.png" class="img-fluid img-thumbnail" alt="Układ słoneczny" title="Układ słoneczny">
+        <p class="mt-2 custom-font">Położenie środka ciężkości Układu Słonecznego względem Słońca w latach 1945-1995</p>
+      </div>
+      <div class="col-md-6 resizable">
+        Centrum Układu Słonecznego stanowi Słońce, gwiazda ciągu głównego typu widmowego G2,
+         która zawiera 99,86% znanej masy Układu i dominuje w nim grawitacyjnie. Jowisz i 
+         Saturn, dwa największe ciała orbitujące wokół Słońca, stanowią więcej niż 90% pozostałej
+          masy układu.<br><br>
+          Większość orbit dużych ciał krążących wokół Słońca położona jest blisko płaszczyzny orbity 
+          ziemskiej, zwanej ekliptyką, podczas gdy orbity komet i obiektów Pasa Kuipera są zwykle 
+          nachylone pod większym kątem do ekliptyki.<br><br>
+          Wszystkie planety i większość innych ciał okrążają Słońce zgodnie z kierunkiem jego 
+          własnej rotacji (przeciwnej do wskazówek zegara, patrząc z góry na biegun północny Słońca). 
+          Istnieją też wyjątki takie jak Kometa Halleya.
+      </div>
+      
+      </div>
+ 
+  <br><br>
+  <hr class="my-4">
+  <br><br>
+  <h1 class="h1 text-center">Ciała niebieskie Układu Słonecznego</h1>
+    
+  
+  <section id="slonce">
+    <br><br><br><br>
+    <div class="row">
+      <div class="col-md-6 resizable">
+        <h1 class="h3 text-center">Słońce</h1>
+        Duża masa Słońca umożliwiła uzyskanie wystarczająco wysokiej 
+        temperatury, by mogła zachodzić reakcja termojądrowa, uwalniająca 
+        ogromne ilości energii, która jest wysyłana w przestrzeń w większości
+         jako promieniowanie elektromagnetyczne, w tym światło widzialne.
+
+        Gwiazdy porządkuje się na diagramie Hertzsprunga-Russella, na 
+        którym umieszcza się je według jasności absolutnej i temperatury 
+        powierzchni. Słońce jest klasyfikowane jako umiarkowanie duży żółty karzeł, 
+        jednak ta nazwa może być myląca, ponieważ - w porównaniu do innych gwiazd 
+        w Galaktyce - Słońce jest raczej duże i jasne. Większość gwiazd na diagramie
+        Hertzsprunga-Russella położona jest w obszarze nazywanym ciągiem głównym; 
+        Słońce leży właśnie pośrodku tego obszaru. Gwiazdy jaśniejsze i gorętsze od 
+        Słońca występują rzadko. Gwiazdy ciemniejsze i chłodniejsze są powszechne.
+
+        Miejsce Słońca w ciągu głównym określa je jako gwiazdę w „sile wieku”. 
+        Nie wyczerpało ono jeszcze zapasu wodoru niezbędnego do reakcji termojądrowej. 
+        W miarę postępowania przemiany wodoru w hel Słońce staje się coraz jaśniejsze. 
+        We wcześniejszych etapach życia gwiazdy, jasność Słońca wynosiła 75% obecnej jasności.
+        <br><br>
+        <div class="text-center" style="display: none;">
+          <label for="sun_audio">Dźwięk Słońca</label>
+          <audio controls class="w-100" name="sun_audio" id="sun_audio">
+            <source src="../audio/slonce.mp3" type="audio/mpeg">
+          Your browser does not support the audio element.
+          </audio>
+        </div>
+        <div class="text-center">
+        <button onclick="playAudio('sun_audio')" class="btn btn-outline-success">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-play" viewBox="0 0 16 16" id="icon_slonce">
+            <path d="M10.804 8 5 4.633v6.734zm.792-.696a.802.802 0 0 1 0 1.392l-6.363 3.692C4.713 12.69 4 12.345 4 11.692V4.308c0-.653.713-.998 1.233-.696z"/>
+          </svg>
+          Dźwięk Słońca</button></div>
+          <br><br>
+      </div>
+      <div class="col-md-6 text-center resizable">
+        <img src="../images/slonce.gif" class="img-fluid img-thumbnail" width="400px" alt="Słońce" title="Słońce">
+        <p class="mt-2 custom-font">Słońce</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="merkury">
+    <br><br><br><br>
+    <div class="row">
+      <div class="col-md-6 resizable">
+        <h1 class="h3 text-center">Merkury</h1>
+        Merkury jest najbliższą Słońca i najmniejszą planetą 
+        (0,055 masy Ziemi). Merkury nie ma naturalnych satelitów, a 
+        jedyne znane jego cechy geologiczne oprócz kraterów uderzeniowych 
+        to obłe grzbiety i urwiska, prawdopodobnie powstałe w okresie 
+        kurczenia się jego stygnącego wnętrza we wczesnej historii 
+        planety. Merkury prawie w ogóle nie ma atmosfery, gdyż
+         jest ona „zdmuchiwana” przez wiatr słoneczny. Nie 
+         wiadomo dokładnie jak ukształtowały się jego stosunkowo 
+         duże żelazne jądro i cienki płaszcz. Według części hipotez
+          jego zewnętrzne warstwy zostały zdarte przez ogromne 
+          uderzenie i to spowodowało, że nie rozrósł się w pełni, 
+          będąc pod wpływem promieniowania młodego Słońca.
+          <br><br>
+          <div class="text-center" style="display: none;">
+            <label for="mercury_audio">Dźwięk Merkurego</label>
+            <audio controls class="w-100" name="mercury_audio" id="mercury_audio">
+              <source src="../audio/mercury.mp3" type="audio/mpeg">
+            Your browser does not support the audio element.
+            </audio>
+          </div>
+          <div class="text-center">
+          <button onclick="playAudio('mercury_audio')" class="btn btn-outline-success">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-play" viewBox="0 0 16 16" class="icon_merkury">
+              <path d="M10.804 8 5 4.633v6.734zm.792-.696a.802.802 0 0 1 0 1.392l-6.363 3.692C4.713 12.69 4 12.345 4 11.692V4.308c0-.653.713-.998 1.233-.696z"/>
+            </svg>
+            Dźwięk Merkurego</button></div>
+            <br><br>
+      </div>
+      <div class="col-md-6 text-center resizable">
+        <img src="../images/merkury.gif" width="400px" class="img-fluid img-thumbnail" alt="Merkury" title="Merkury">
+        <p class="mt-2 custom-font">Merkury</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="wenus">
+    <br><br><br><br>
+    <div class="row">
+      <div class="col-md-6  resizable">
+        <h1 class="h3 text-center">Wenus</h1>
+        Wenus jest zbliżona rozmiarami do Ziemi
+         (0,815 masy Ziemi) i podobnie jak ona, 
+         ma gruby płynny płaszcz wokół żelaznego 
+         jądra i masywną atmosferę, 90 razy gęstszą niż 
+         ziemska. Wenus nie ma naturalnych satelitów. Jest 
+         najgorętszą planetą, o temperaturze powierzchni 
+         powyżej 400 °C, z powodu dużej zawartości gazów
+          cieplarnianych w atmosferze. Nie ma ona pola 
+          magnetycznego, które mogłoby zapobiec uszczupleniu 
+          jej gęstej atmosfery, co sugeruje, że atmosfera 
+          jest stale uzupełniana przez aktywność wulkaniczną. 
+          Nie ma jednak innych dowodów współczesnej aktywności
+           geologicznej na Wenus.
+          <br><br>
+          <div class="text-center" style="display: none;">
+            <label for="wenus_audio">Dźwięk Wenusa</label>
+            <audio controls class="w-100" name="wenus_audio" id="wenus_audio">
+              <source src="../audio/wenus.mp3" type="audio/mpeg">
+            Your browser does not support the audio element.
+            </audio>
+          </div>
+          <div class="text-center">
+          <button onclick="playAudio('wenus_audio')" class="btn btn-outline-success">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-play" viewBox="0 0 16 16" class="icon_wenus">
+              <path d="M10.804 8 5 4.633v6.734zm.792-.696a.802.802 0 0 1 0 1.392l-6.363 3.692C4.713 12.69 4 12.345 4 11.692V4.308c0-.653.713-.998 1.233-.696z"/>
+            </svg>
+            Dźwięk Wenusa</button></div>
+          <br><br>
+      </div>
+      <div class="col-md-6 text-center resizable">
+        <img src="../images/wenus.gif" width="400px" class="img-fluid img-thumbnail" alt="Wenus" title="Wenus">
+        <p class="mt-2 custom-font">Wenus</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="ziemia">
+    <br><br><br><br>
+    <div class="row">
+      <div class="col-md-6 resizable">
+        <h1 class="h3 text-center">Ziemia</h1>
+        Ziemia jest największą i najgęstszą z
+         planet wewnętrznych, jedyną z pewnością 
+         aktywną geologicznie i jedyną znaną planetą,
+          na której istnieje życie. Jej hydrosfera
+           jest unikalna wśród planet skalistych.
+            Jest także jedyną planetą gdzie została 
+            zaobserwowana tektonika płyt. Atmosfera 
+            ziemska jest odmienna od atmosfer 
+            pozostałych planet i jest wciąż kształtowana
+             przez procesy biologiczne, dzięki którym zawiera
+              21% wolnego tlenu. Ma jednego naturalnego satelitę -
+               Księżyc - jedynego dużego satelitę 
+               pośród planet skalistych w Układzie 
+               Słonecznym. Czasem wręcz określa się układ 
+               Ziemia-Księżyc jako planetę podwójną.
+          <br><br>
+          <div class="text-center" style="display: none;">
+            <label for="ziemia_audio">Dźwięk Ziemi</label>
+            <audio controls class="w-100" name="ziemia_audio" id="ziemia_audio">
+              <source src="../audio/ziemia.mp3" type="audio/mpeg">
+            Your browser does not support the audio element.
+            </audio>
+          </div>
+          <div class="text-center">
+          <button onclick="playAudio('ziemia_audio')" class="btn btn-outline-success">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-play" viewBox="0 0 16 16" class="icon_ziemia">
+              <path d="M10.804 8 5 4.633v6.734zm.792-.696a.802.802 0 0 1 0 1.392l-6.363 3.692C4.713 12.69 4 12.345 4 11.692V4.308c0-.653.713-.998 1.233-.696z"/>
+            </svg>
+            Dźwięk Ziemi</button></div>
+          <br><br>
+      </div>
+      <div class="col-md-6 text-center resizable">
+        <img src="../images/ziemia.gif" width="400px" class="img-fluid img-thumbnail" alt="Ziemia" title="Ziemia">
+        <p class="mt-2 custom-font">Ziemia</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="mars">
+    <br><br><br><br>
+    <div class="row">
+      <div class="col-md-6  resizable">
+        <h1 class="h3 text-center">Mars</h1>
+        Mars jest mniejszy niż Ziemia i Wenus (0,107 masy Ziemi).
+         Ma rzadką atmosferę złożoną głównie z dwutlenku węgla. 
+         Jego powierzchnia jest usiana wieloma wulkanami takimi 
+         jak Olympus Mons i dolinami pochodzenia tektonicznego takimi 
+         jak Valles Marineris. Nie wiadomo, czy Mars wykazuje współcześnie 
+         aktywność geologiczną. Jego czerwona barwa pochodzi od gleby 
+         bogatej w tlenki żelaza. Mars ma dwa niewielkie księżyce: 
+         Fobosa i Deimosa. Mogą one być przechwyconymi planetoidami 
+         (przypominają je składem), lub mogły powstać na orbitach 
+         podobnych do dzisiejszych, na co wskazuje dynamika, np. 
+         z materii wyrzuconej przy uderzeniu dużego ciała w Marsa.
+          <br><br>
+          <div class="text-center" style="display: none;">
+            <label for="mars_audio">Dźwięk Marsa</label>
+            <audio controls class="w-100" name="mars_audio" id="mars_audio">
+              <source src="../audio/mars.mp3" type="audio/mpeg">
+            Your browser does not support the audio element.
+            </audio>
+          </div>
+          <div class="text-center">
+          <button onclick="playAudio('mars_audio')" class="btn btn-outline-success">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-play" viewBox="0 0 16 16" class="icon_mars">
+              <path d="M10.804 8 5 4.633v6.734zm.792-.696a.802.802 0 0 1 0 1.392l-6.363 3.692C4.713 12.69 4 12.345 4 11.692V4.308c0-.653.713-.998 1.233-.696z"/>
+            </svg>
+            Dźwięk Marsa</button>
+          </div>
+          <br><br>
+      </div>
+      <div class="col-md-6 text-center resizable">
+        <img src="../images/mars.gif" width="400px" class="img-fluid img-thumbnail" alt="Mars" title="Mars">
+        <p class="mt-2 custom-font">Mars</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="jowisz">
+    <br><br><br><br>
+    <div class="row">
+      <div class="col-md-6 resizable ">
+        <h1 class="h3 text-center">Jowisz</h1>
+        Jowisz ma masę równą 318 mas Ziemi, czyli 2,5 razy więcej 
+        niż wszystkie pozostałe planety Układu. Składa się w większości
+         z wodoru i helu. Duża ilość ciepła pochodząca z wnętrza planety
+          tworzy wiele interesujących zjawisk w jego atmosferze, takich 
+          jak równoleżnikowe pasma chmur czy Wielka Czerwona Plama.
+           Jowisz ma 79 znanych księżyców. Cztery największe z nich, 
+           tzw. księżyce galileuszowe, wykazują podobieństwa do planet 
+           skalistych, takie jak wulkanizm i zjawiska tektoniczne. 
+           Ganimedes, największy naturalny satelita w Układzie Słonecznym,
+           jest większy niż Merkury.
+          <br><br>
+          <div class="text-center" style="display: none;">
+            <label for="jowisz_audio">Dźwięk Jowisza</label>
+            <audio controls class="w-100" name="jowisz_audio" id="jowisz_audio">
+              <source src="../audio/jowisz.mp3" type="audio/mpeg">
+            Your browser does not support the audio element.
+            </audio>
+          </div>
+          <div class="text-center">
+          <button onclick="playAudio('jowisz_audio')" class="btn btn-outline-success">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-play" viewBox="0 0 16 16" class="icon_jowisz">
+              <path d="M10.804 8 5 4.633v6.734zm.792-.696a.802.802 0 0 1 0 1.392l-6.363 3.692C4.713 12.69 4 12.345 4 11.692V4.308c0-.653.713-.998 1.233-.696z"/>
+            </svg>
+            Dźwięk Jowisza</button></div>
+          <br><br>
+      </div>
+      <div class="col-md-6 text-center resizable">
+        <img src="../images/jowisz.gif" width="400px" class="img-fluid img-thumbnail" alt="Jowisz" title="Jowisz">
+        <p class="mt-2 custom-font">Jowisz</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="saturn">
+    <br><br><br><br>
+    <div class="row">
+      <div class="col-md-6  resizable">
+        <h1 class="h3 text-center">Saturn</h1>
+        Saturn słynie z szerokich i jasnych pierścieni. 
+        Pod względem budowy i składu atmosfery bardzo przypomina
+         on Jowisza. Ma jednak bardzo małą gęstość; przy średnicy 
+         równej ok. 84% średnicy Jowisza jest ponad trzykrotnie mniej 
+         masywny. Ma 82 znane satelity. Największe spośród nich są 
+         zbudowane w dużym stopniu z lodu. Z tej grupy Tytan i Enceladus 
+         wykazują oznaki aktywności geologicznej (kriowulkanizm). Tytan 
+         jest większy niż Merkury i jest jedynym satelitą w Układzie 
+         Słonecznym, który ma gęstą atmosferę, w której zachodzą złożone 
+         zjawiska pogodowe; poza tym znajdują się na nim powierzchniowe
+          zbiorniki (jeziora i morza) ciekłych węglowodorów. Ciśnienie
+           atmosferyczne na jego powierzchni jest o ok. 47% większe niż 
+           na powierzchni Ziemi
+          <br><br>
+          <div class="text-center" style="display: none;">
+            <label for="saturn_audio">Dźwięk Saturna</label>
+            <audio controls class="w-100" name="saturn_audio" id="saturn_audio">
+              <source src="../audio/saturn.mp3" type="audio/mpeg">
+            Your browser does not support the audio element.
+            </audio>
+          </div>
+          <div class="text-center">
+          <button onclick="playAudio('saturn_audio')" class="btn btn-outline-success">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-play" viewBox="0 0 16 16" class="icon_saturn">
+              <path d="M10.804 8 5 4.633v6.734zm.792-.696a.802.802 0 0 1 0 1.392l-6.363 3.692C4.713 12.69 4 12.345 4 11.692V4.308c0-.653.713-.998 1.233-.696z"/>
+            </svg>
+            Dźwięk Saturna</button></div>
+          <br><br>
+      </div>
+      <div class="col-md-6 text-center resizable">
+        <img src="../images/saturn.gif" width="400px" class="img-fluid img-thumbnail" alt="Saturn" title="Saturn">
+        <p class="mt-2 custom-font">Saturn</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="uran">
+    <br><br><br><br>
+    <div class="row">
+      <div class="col-md-6 resizable ">
+        <h1 class="h3 text-center">Uran</h1>
+        Uran, przy masie 14 mas Ziemi, jest najlżejszą z planet-olbrzymów.
+         Jego unikalną cechą jest to, że obiega Słońce „leżąc na boku”; 
+         jego oś obrotu jest nachylona do ekliptyki pod kątem bliskim 0°. 
+         Ma także znacznie mniej aktywne jądro i wypromieniowuje mniej 
+         ciepła niż pozostałe olbrzymy[42] Uran ma 27 znanych księżyców 
+         (stan z 2 października 2018[1], spośród których największe to 
+         Tytania, Oberon, Umbriel, Ariel i Miranda).
+          <br><br>
+          <div class="text-center" style="display: none;">
+            <label for="uran_audio">Dźwięk Urana</label>
+            <audio controls class="w-100" name="uran_audio" id="uran_audio">
+              <source src="../audio/uran.mp3" type="audio/mpeg">
+            Your browser does not support the audio element.
+            </audio>
+          </div>
+          <div class="text-center">
+          <button onclick="playAudio('uran_audio')" class="btn btn-outline-success">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-play" viewBox="0 0 16 16" class="icon_uran">
+              <path d="M10.804 8 5 4.633v6.734zm.792-.696a.802.802 0 0 1 0 1.392l-6.363 3.692C4.713 12.69 4 12.345 4 11.692V4.308c0-.653.713-.998 1.233-.696z"/>
+            </svg>
+            Dźwięk Urana</button></div>
+          <br><br>
+      </div>
+      <div class="col-md-6 text-center resizable">
+        <img src="../images/uran.gif" width="400px" class="img-fluid img-thumbnail" alt="Uran" title="Uran">
+        <p class="mt-2 custom-font">Uran</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="neptun">
+    <br><br><br><br>
+    <div class="row">
+      <div class="col-md-6  resizable">
+        <h1 class="h3 text-center">Neptun</h1>
+        Neptun, chociaż nieco mniejszy od Urana, ma większą masę 
+        (równą 17 mas Ziemi) i większą gęstość. Wypromieniowuje też 
+        więcej ciepła, ale nie tak dużo jak Jowisz czy Saturn. Neptun 
+        ma 14 znanych księżyców. Największy z nich, Tryton, jest 
+        geologicznie aktywny, ma aktywne gejzery wyrzucające płynny 
+        azot. Tryton jest jedynym znanym dużym satelitą poruszającym się 
+        wokół planety ruchem wstecznym - przeciwnym niż jej ruch wirowy.
+          <br><br>
+          <div class="text-center" style="display: none;">
+            <label for="neptun_audio">Dźwięk Neptuna</label>
+            <audio controls class="w-100" name="neptun_audio" id="neptun_audio">
+              <source src="../audio/neptun.mp3" type="audio/mpeg">
+            Your browser does not support the audio element.
+            </audio>
+          </div>
+          <div class="text-center">
+          <button onclick="playAudio('neptun_audio')" class="btn btn-outline-success">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-play" viewBox="0 0 16 16" class="icon_neptun">
+              <path d="M10.804 8 5 4.633v6.734zm.792-.696a.802.802 0 0 1 0 1.392l-6.363 3.692C4.713 12.69 4 12.345 4 11.692V4.308c0-.653.713-.998 1.233-.696z"/>
+            </svg>
+            Dźwięk Neptuna</button></div>
+          <br><br>
+      </div>
+      <div class="col-md-6 text-center resizable">
+        <img src="../images/neptun.gif" width="400px" class="img-fluid img-thumbnail" alt="Neptun" title="Neptun">
+        <p class="mt-2stom-font">Neptun</p>
+      </div>
+    </div>
+  </section>
+
+  <br><br>
+  <hr class="my-4">
+
+  <section id="tabelaDanych">
+    <br><br>
+    <h1 class="h1 text-center">Tabela Danych</h1>
+    <br><br>
+    <div class="row">
+      <div class="col-12 col-md-12 mx-auto resizable">
+        <table class="table table-dark">
+          <thead>
+            <tr>
+              <th scope="col">Obiekt</th>
+              <th scope="col">Symbol</th>
+              <th scope="col">Średnica równikowa</th>
+              <th scope="col">Masa (10<sup>21</sup>kg)</th>
+              <th scope="col">Księżyce</th>
+              <th scope="col">Rodzaj</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th scope="row">Słońce</th>
+              <td>☉</td>
+              <td>ok. 1 392 000</td>
+              <td>1 989 100 000</td>
+              <td>-</td>
+              <td>gwiazda</td>
+            </tr>
+            <tr>
+              <th scope="row">Merkury</th>
+              <td>☿</td>
+              <td>4 879</td>
+              <td>330,2</td>
+              <td>0</td>
+              <td>skalista</td>
+            </tr>
+            <tr>
+              <th scope="row">Wenus</th>
+              <td>♀</td>
+              <td>12 104</td>
+              <td>4 868,5</td>
+              <td>0</td>
+              <td>skalista</td>
+            </tr>
+            <tr>
+              <th scope="row">Ziemia</th>
+              <td>♁</td>
+              <td>12 756</td>
+              <td>5 974,2</td>
+              <td>1</td>
+              <td>skalista</td>
+            </tr>
+            <tr>
+              <th scope="row">Mars</th>
+              <td>♂</td>
+              <td>6 805</td>
+              <td>641,9</td>
+              <td>2</td>
+              <td>skalista</td>
+            </tr>
+            <tr>
+              <th scope="row">Jowisz</th>
+              <td>♃</td>
+              <td>142 984</td>
+              <td>1 898 600,8</td>
+              <td>95</td>
+              <td>gazowa</td>
+            </tr>
+            <tr>
+              <th scope="row">Saturn</th>
+              <td>♄</td>
+              <td>120 536</td>
+              <td>568 516,8</td>
+              <td>146</td>
+              <td>gazowa</td>
+            </tr>
+            <tr>
+              <th scope="row">Uran</th>
+              <td>⛢</td>
+              <td>51 118</td>
+              <td>86 841</td>
+              <td>27</td>
+              <td>gazowo-lodowa</td>
+            </tr>
+            <tr>
+              <th scope="row">Neptun</th>
+              <td>♆</td>
+              <td>49 528</td>
+              <td>102 439,6</td>
+              <td>14</td>
+              <td>gazowo-lodowa</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+
+
+
+
+  </div>
+
+  <footer class="footer mt-auto py-3 bg-dark">
+    <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.0);">
+      © 2024 Copyright: Kacper Tracz
+    </div>
+  </footer>
+  <script src="../js/client.js" defer></script>
+  <script src="../js/audio_play.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,51 @@
+.gradient-custom {
+    /* fallback for old browsers */
+    animation: colorChangeAnimation 30s linear infinite;
+    background: linear-gradient(-45deg, #000000, #ffffff);
+    background-size: 400% 400%;
+    }
+
+@keyframes colorChangeAnimation {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 400% 300%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+  
+html {
+  position: relative;
+  min-height: 100%;
+}
+body {
+  margin-bottom: 60px; /* Margin bottom by footer height */
+}
+
+.footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 60px; /* Set the fixed height of the footer here */
+  line-height: 60px; /* Vertically center the text there */
+}
+
+.custom-font
+{
+  font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
+.resizable {
+  transition: transform 0.3s ease-in-out; /* Płynne przejście transformacji */
+}
+
+/* Efekt przy najechaniu myszą */
+.resizable:hover{
+  transform: scale(1.05); /* Zwiększamy rozmiar obrazu o 20% */
+}
+
+
