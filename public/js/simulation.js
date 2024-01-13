@@ -1,80 +1,286 @@
-let planets = []
-let sun
-let numPlanets = 4
-let G = 120
-let destabilise = 0.15
+const canvas = document.getElementById("solarSystemCanvas");
+const ctx = canvas.getContext("2d");
+const sunRadius = 30; // Promień Słońca
+const glowRadius = 30; // Promień efektu świecenia
+var canvas_before_h = canvas.height;
+var canvas_before_w = canvas.width;
+const stars = [];
+var play = false;
+const planetImages = {}; // Obiekty do przechowywania obrazków planet
+var intensity =  parseFloat(document.getElementById("speedMulti").value);
+var intensityVal = document.getElementById("intensityVal");
 
-function setup() {
-  createCanvas(windowWidth,windowHeight)
-  sun = new Body(50,createVector(0,0),createVector(0,0))
+function saveAsPNG() {
+  const link = document.createElement("a");
+  link.href = canvas.toDataURL("image/png");
+  link.download = "screenshow_uklad_sloneczny.png";
+  link.click();
+}
 
-    // Initialise the planets
-  for (let i = 0; i < numPlanets; i++) {
-    let mass = random(5, 15)
-    let radius = random(sun.d, min(windowWidth/2,windowHeight/2))
-    let angle = random(0, TWO_PI)
-    let planetPos = createVector(radius * cos(angle), radius * sin(angle))
+function updateIntensity() {
+  intensity = parseFloat(document.getElementById("speedMulti").value);
+  intensityVal.innerHTML = intensity;
+}
 
-    // Find direction of orbit and set velocity
-    let planetVel = planetPos.copy()
-    if (random(1) < 0.1) planetVel.rotate(-HALF_PI)
-    else planetVel.rotate(HALF_PI)  // Direction of orbit
-    planetVel.normalize()
-    planetVel.mult( sqrt((G * sun.mass)/(radius)) ) // Circular orbit velocity
-    planetVel.mult( random( 1-destabilise, 1+destabilise) ) // create elliptical orbit
+// Ładowanie obrazków planet
+const loadPlanetImages = () => {
+  planets.forEach(planet => {
+    const img = new Image();
+    img.src = `../images/${planet.name.toLowerCase()}.png`; // Załóżmy, że obrazy planet mają nazwy takie same jak ich nazwy w małych literach
+    planetImages[planet.name] = img;
+  });
+};
 
-    planets.push( new Body(mass, planetPos, planetVel) )
+function generateStars() {
+  for (let i = 0; i < 100; i++) {
+    const x = Math.random() * canvas.width;
+    const y = Math.random() * canvas.height;
+    const size = Math.random() * 2;
+    stars.push({ x, y, size });
   }
 }
+
+generateStars();
+
+function drawStars() {
+  stars.forEach(star => {
+    ctx.beginPath();
+    ctx.arc(star.x, star.y, star.size, 0, 2 * Math.PI);
+    ctx.fillStyle = "white";
+    ctx.fill();
+    ctx.closePath();
+  });
+}
+
+function moveStars() {
+  stars.forEach(star => {
+    star.x -= 0.4;
+    if (star.x < 0) {
+      star.x = canvas.width;
+    }
+  });
+}
+
+function updateStarsAfterCanvasChange() {
+  const ratioX = canvas.width / canvas_before_w;
+  const ratioY = canvas.height / canvas_before_h;
+
+  stars.forEach(star => {
+    star.x *= ratioX;
+    star.y *= ratioY;
+
+    // Jeśli gwiazda opuściła canvas w wyniku zmiany rozmiaru, umieść ją ponownie na prawym krańcu
+    if (star.x < 0) {
+      star.x = canvas.width;
+    }
+  });
+}
+
+var min = canvas.width < canvas.height ? canvas.width : canvas.height;
+
+const planets = [
+  { polos_mala: null, odl_field: null, polos_duza: null, radius: min/30, distance: 0, speed: 0.01, name: "Sun", orbit: null},
+  { polos_mala: 0.39, odl_field: 'odl_merkury', polos_duza: 0.47, radius: min/150, distance: min/2 * 0.15, speed: 0.03, name: "Mercury", orbit: [] },
+  { polos_mala: 0.72, odl_field: 'odl_wenus', polos_duza: 0.72, radius: min/120, distance: min/2 * 0.20, speed: 0.02, name: "Venus", orbit: [] },
+  { polos_mala: 1, odl_field: 'odl_ziemia', polos_duza: 1.0, radius: min/100, distance: min/2 * 0.27, speed: 0.015, name: "Earth", orbit: [] },
+  { polos_mala: 1.38, odl_field: 'odl_mars', polos_duza: 1.67, radius: min/120, distance: min/2 * 0.35, speed: 0.01, name: "Mars", orbit: [] },
+  { polos_mala: 4.95, odl_field: 'odl_jowisz', polos_duza: 5.46, radius: min/50, distance: min/2 * 0.48, speed: 0.006, name: "Jupiter", orbit: [] },
+  { polos_mala: 9.05, odl_field: 'odl_saturn', polos_duza: 10.12, radius: min/60, distance: min/2 * 0.65, speed: 0.004, name: "Saturn", orbit: [] },
+  { polos_mala: 18.37, odl_field: 'odl_uran', polos_duza: 20.11, radius: min/100, distance: min/2 * 0.82, speed: 0.003, name: "Uranus", orbit: [] },
+  { polos_mala: 29.74, odl_field: 'odl_neptun', polos_duza: 30.44, radius: min/100, distance: min/2 * 0.95, speed: 0.002, name: "Neptune", orbit: [] },
+];
+
+function updatePlanets()
+{
+  planets[0].radius = min/30;
+  planets[1].radius = min/150;
+  planets[2].radius = min/120;
+  planets[3].radius = min/100;
+  planets[4].radius = min/120;
+  planets[5].radius = min/50;
+  planets[6].radius = min/60;
+  planets[7].radius = min/100;
+  planets[8].radius = min/100;
+  planets[1].distance = min/2 * 0.15;
+  planets[2].distance = min/2 * 0.2;
+  planets[3].distance = min/2 * 0.27;
+  planets[4].distance = min/2 * 0.35;
+  planets[5].distance = min/2 * 0.48;
+  planets[6].distance = min/2 * 0.65;
+  planets[7].distance = min/2 * 0.82;
+  planets[8].distance = min/2 * 0.95;
+  
+}
+
+function resizeCanvas() {
+  canvas_before_h = canvas.height;
+  canvas_before_w = canvas.width;
+  canvas.width =
+    window.innerWidth < window.innerHeight
+      ? window.innerWidth * 0.8
+      : window.innerHeight * 0.8;
+  canvas.height =
+    window.innerWidth < window.innerHeight
+      ? window.innerWidth * 0.8
+      : window.innerHeight * 0.8;
+      updateStarsAfterCanvasChange();
+      min = canvas.width < canvas.height ? canvas.width : canvas.height;
+      updatePlanets()
+}
+
+// Call resizeCanvas initially and on window resize
+window.addEventListener("resize", resizeCanvas);
+
+resizeCanvas();
+
+function playOnOff()
+{
+  if(play)
+  {
+    var btn = document.getElementById("onoffbtn");
+    btn.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-play" viewBox="0 0 16 16">' +
+    '<path d="M10.804 8 5 4.633v6.734zm.792-.696a.802.802 0 0 1 0 1.392l-6.363 3.692C4.713 12.69 4 12.345 4 11.692V4.308c0-.653.713-.998 1.233-.696z"/>' +
+  '</svg> Rozpocznij animację';
+    play = false;
+    btn.classList.remove("btn-outline-danger");
+    btn.classList.add("btn-outline-success")
+  }
+  else 
+  {
+    var btn = document.getElementById("onoffbtn");
+    btn.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pause" viewBox="0 0 16 16">' +
+    '<path d="M6 3.5a.5.5 0 0 1 .5.5v8a.5.5 0 0 1-1 0V4a.5.5 0 0 1 .5-.5m4 0a.5.5 0 0 1 .5.5v8a.5.5 0 0 1-1 0V4a.5.5 0 0 1 .5-.5"/>' +
+  '</svg> Zatrymaj animację';
+    play = true;
+    btn.classList.remove("btn-outline-success");
+    btn.classList.add("btn-outline-danger")
+  }
+}
+
+// Planet data (radius, distance from the sun, color, and orbit speed)
+
+function clearOrbits()
+{
+  planets[1].orbit.length = 0;
+  planets[2].orbit.length = 0;
+  planets[3].orbit.length = 0;
+  planets[4].orbit.length = 0;
+  planets[5].orbit.length = 0;
+  planets[6].orbit.length = 0;
+  planets[7].orbit.length = 0;
+  planets[8].orbit.length = 0;
+}
+
+loadPlanetImages(); // Ładowanie obrazków planet
+
+function drawSun()
+{
+  const gradient = ctx.createRadialGradient(
+    canvas.width / 2,
+    canvas.height / 2,
+    sunRadius - glowRadius,
+    canvas.width / 2,
+    canvas.height / 2,
+    sunRadius
+  );
+  gradient.addColorStop(0, "rgba(255, 255, 0, 0.7)");
+  gradient.addColorStop(1, "rgba(255, 255, 0, 0)");
+
+  ctx.beginPath();
+  ctx.arc(canvas.width / 2, canvas.height / 2, sunRadius, 0, 2 * Math.PI);
+  ctx.fillStyle = gradient;
+  ctx.fill();
+  ctx.closePath();
+
+  // Draw the sun
+  ctx.drawImage(
+    planetImages["Sun"],
+    canvas.width / 2 - planets[0].radius,
+    canvas.height / 2 - planets[0].radius,
+    planets[0].radius * 2,
+    planets[0].radius * 2
+  );
+}
+
+function drawOrbit(orbit)
+{
+  ctx.beginPath();
+  ctx.moveTo(orbit[0].x, orbit[0].y);
+  for(let i=1; i<orbit.length; i++) ctx.lineTo(orbit[i].x, orbit[i].y);
+  ctx.strokeStyle = "gray";
+  ctx.stroke();
+  ctx.closePath();
+}
+
+function distanceFromSun(x, y)
+{
+  return Math.sqrt(Math.pow(x-canvas.width/2, 2) + Math.pow(y-canvas.height/2, 2));
+}
+
+
+function drawPlanets()
+{
+  planets.slice(1).forEach(planet => {
+    planet.angle = (planet.angle || 0) + planet.speed*intensity;
+    const a = planet.distance; // Półoś wielka
+    const b = planet.distance * planet.polos_mala / planet.polos_duza; // Półoś mała - wartość przykładowa, dostosuj do uzyskania pożądanego kształtu
+    const x = canvas.width / 2 + a * Math.cos(planet.angle);
+    const y = canvas.height / 2 + b * Math.sin(planet.angle);
+
+
+    if(planet.orbit.length >= 1 && x !== planet.orbit[planet.orbit.length-1].x && y !== planet.orbit[planet.orbit.length-1].y)
+    planet.orbit.push({x, y});
+    else if(planet.orbit.length == 0)
+    planet.orbit.push({x, y});
+    if(document.getElementById("orbitCheckbox").checked)
+    drawOrbit(planet.orbit);      
+
+    let dist = distanceFromSun(x,y) / planet.distance * planet.polos_duza;
+
+    document.getElementById(planet.odl_field).innerHTML = dist.toFixed(4);
+
+    let w = 2;
+
+    if(planet.name == "Saturn") w = 4;
+
+    ctx.drawImage(
+      planetImages[planet.name],
+      x - planet.radius,
+      y - planet.radius,
+      planet.radius * w,
+      planet.radius * 2
+    );
+  });
+}
+
 
 function draw() {
-  background(180)
-  translate(width/2, height/2)
-  for (let i = numPlanets-1; i >= 0; i--) {
-    sun.attract(planets[i])
-    planets[i].move()
-    planets[i].show()
+  if(play)
+  {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  resizeCanvas();
+  ctx.fillStyle = "black";
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+  drawStars();
+
+  
+    updateIntensity();    
+
+    moveStars();
+    
+    drawSun();
+
+    drawPlanets();
   }
-  sun.show()
+
+  requestAnimationFrame(draw);
 }
 
 
-function Body(_mass, _pos, _vel){
-  this.mass = _mass
-  this.pos = _pos
-  this.vel = _vel
-  this.d = this.mass*2
-  this.thetaInit = 0
-  this.path = []
-  this.pathLen = Infinity
+ctx.clearRect(0, 0, canvas.width, canvas.height);
+  resizeCanvas();
+  ctx.fillStyle = "black";
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+  drawStars();
 
-  this.show = function() {
-    stroke(0,50)
-    for (let i = 0; i < this.path.length-2; i++) {
-      line(this.path[i].x, this.path[i].y, this.path[i+1].x, this.path[i+1].y,)
-    }
-    fill(255); noStroke()
-    ellipse(this.pos.x, this.pos.y, this.d, this.d)
-  }
-
-
-  this.move = function() {
-    this.pos.x += this.vel.x
-    this.pos.y += this.vel.y
-    this.path.push(createVector(this.pos.x,this.pos.y))
-    if (this.path.length > 200) this.path.splice(0,1)
-  }
-
-  this.applyForce = function(f) {
-    this.vel.x += f.x / this.mass
-    this.vel.y += f.y / this.mass
-  }
-
-  this.attract = function(child) {
-    let r = dist(this.pos.x, this.pos.y, child.pos.x, child.pos.y)
-    let f = (this.pos.copy()).sub(child.pos)
-    f.setMag( (G * this.mass * child.mass)/(r * r) )
-    child.applyForce(f)
-  }
-
-}
+draw();

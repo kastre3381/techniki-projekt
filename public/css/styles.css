@@ -49,3 +49,42 @@ body {
 }
 
 
+canvas {
+  display: block;
+  margin: auto;
+  border: 2px solid white;
+}
+
+.circle-container {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 50px;
+  height: 50px;
+  background-color: black;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  opacity: 0; /* Ukryj kółko na początku */
+  animation: fadeIn 2s forwards; /* Animacja pokazująca kółko */
+}
+
+@keyframes fadeIn {
+  to {
+    opacity: 1; /* Pokaż kółko po zakończeniu animacji */
+  }
+}
+
+.arrow {
+  text-decoration: none;
+  color: white;
+  font-size: 24px;
+  z-index: 1; /* Ustaw z-index, aby strzałka była na wierzchu kółka */
+}
+
+.form-check-input:checked {
+  background-color: green;
+  border-color: green;
+}
