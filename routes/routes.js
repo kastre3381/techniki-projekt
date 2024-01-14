@@ -1,7 +1,9 @@
 const express = require('express');
-const { Client } = require('pg');
 const router = express.Router();
 const path = require('path');
+const { Client } = require('pg');
+const jwt = require('jsonwebtoken');
+
 
 const client = new Client({
   user: 'whvezcgt',
@@ -11,14 +13,16 @@ const client = new Client({
   port: 5432,
 });
 
+client.connect()
+  .then(() => console.log('Connected to PostgreSQL'))
+  .catch(err => console.error('Error connecting to PostgreSQL:', err));
+
 const isAuthenticated = require('../middleware/authMiddleware');
 
 // Route to get user authentication status
 
 
-client.connect()
-  .then(() => console.log('Connected to PostgreSQL'))
-  .catch(err => console.error('Error connecting to PostgreSQL:', err));
+
 
 router.get('/authStatus', isAuthenticated, (req, res) => {
   // Send the authentication status to the client
@@ -90,6 +94,10 @@ router.post('/register', async (req, res) => {
       // Registration successful, redirect to the main page
       await client.query('INSERT INTO ti.user(username, passwd) VALUES($1, $2)', [username, password]);
       req.session.user = { username: username };
+    //   const token = jwt.sign({ id: username }, "kochampieski2", {
+    //     expiresIn: 600000,
+    // });
+    //   res.cookie("token", token).json({ success: true, message: 'User registered successfully' })
       res.redirect('/');
     }
   } catch (error) {

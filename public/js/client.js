@@ -10,7 +10,7 @@ document.addEventListener('DOMContentLoaded', () => {
           console.log('Authentication status:', data);
     
           // Update UI based on authentication status
-          updateUI(data.isAuthenticated);
+          updateUI(data);
         } catch (error) {
           console.error('Error checking authentication status:', error);
           
@@ -20,7 +20,7 @@ document.addEventListener('DOMContentLoaded', () => {
       }
   
     // Function to update UI based on authentication status
-    function updateUI(isAuthenticated) {
+    function updateUI(data) {
       // Get button and content elements
       const loginButton = document.getElementById('loginButton');
       const registerButton = document.getElementById('registerButton');
@@ -29,7 +29,7 @@ document.addEventListener('DOMContentLoaded', () => {
       console.log('registerButton:', registerButton);
       console.log('logoutButton:', logoutButton);
 
-      if (isAuthenticated) {
+      if (data.isAuthenticated) {
         // User is authenticated, show logout button and logged-in content
         loginButton.style.display = 'none';
         registerButton.style.display = 'none';
