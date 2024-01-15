@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pl">
 <head>
   <meta charset="UTF-8">
   <title>Symulacja</title>
@@ -7,12 +7,14 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
   <link rel="icon" href="../images/icon.svg" type="image/x-icon">
+  <script src="../js/handle-ui.js" defer></script>
+  <script src="../js/client_simulation.js" defer></script>
   <link rel="stylesheet" href="../css/styles.css">
 </head>
 <body class="bg-dark" style="color: aliceblue;">
   <nav class="navbar navbar-expand-lg bg-light fixed-top">
     <div class="container-fluid">
-        <a class="navbar-brand" href="/"><strong>Strona domowa</strong></a>
+        <a class="navbar-brand" href="/simulation"><strong>Symulacja</strong></a>
 
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -20,7 +22,10 @@
 
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-                <li class="nav-item">
+              <li class="nav-item">
+                <a href="/" class="nav-link">Strona domowa</a>
+              </li>  
+              <li class="nav-item">
                     <a href="/login" id="loginButton"class="nav-link">Zaloguj się</a>
                 </li>
                 <li class="nav-item">
@@ -41,28 +46,36 @@
       <canvas id="solarSystemCanvas"></canvas>
     </div>
     <div class="col-md-4">
-      <div class="col-md-12">
+      <div class="row">
+      <div class="col-md-4">
         <button class="btn btn-outline-success" onclick="playOnOff()" id="onoffbtn">
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-play" viewBox="0 0 16 16">
             <path d="M10.804 8 5 4.633v6.734zm.792-.696a.802.802 0 0 1 0 1.392l-6.363 3.692C4.713 12.69 4 12.345 4 11.692V4.308c0-.653.713-.998 1.233-.696z"/>
           </svg>
           Rozpocznij animację</button>
       </div>
+      <div class="col-md-4">
+        <button class="btn btn-outline-success" onclick="saveAsPNG()">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-save" viewBox="0 0 16 16">
+            <path d="M2 1a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H9.5a1 1 0 0 0-1 1v7.293l2.646-2.647a.5.5 0 0 1 .708.708l-3.5 3.5a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L7.5 9.293V2a2 2 0 0 1 2-2H14a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2h2.5a.5.5 0 0 1 0 1z"/>
+          </svg>
+          Zapisz jako PNG</button>
+          </div>
+          <div class="col-md-4">
+            <button class="btn btn-outline-success" id="orbit-clear">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eraser-fill" viewBox="0 0 16 16">
+                <path d="M8.086 2.207a2 2 0 0 1 2.828 0l3.879 3.879a2 2 0 0 1 0 2.828l-5.5 5.5A2 2 0 0 1 7.879 15H5.12a2 2 0 0 1-1.414-.586l-2.5-2.5a2 2 0 0 1 0-2.828zm.66 11.34L3.453 8.254 1.914 9.793a1 1 0 0 0 0 1.414l2.5 2.5a1 1 0 0 0 .707.293H7.88a1 1 0 0 0 .707-.293z"/>
+              </svg>
+              Wyczyść orbity</button>
+          </div>
+      </div> 
+      <br>
+      <select id="selectForOptions" class="form-select"></select>
       <div>
       <br>
-      <label for="speedMulti">Intensywność symulacji: <strong id="intensityVal"></strong> </label>
-      <input
-    type="range"
-    class="form-range"
-    id="speedMulti"
-    name="speedMulti"
-    min="0.0"
-    max="5.0"
-    step="0.01"
-    value="1.0"
-    onchange="updateIntensity()"
-  >
-  <br><br>
+      <div id="simulationParameters" class="border border-success" style="padding: 10px;">
+  </div>
+  <br>
 
   <table class="table table-dark">
     <thead>
@@ -105,48 +118,19 @@
         <td><strong id="odl_neptun"></strong></td>
       </tr>
     </tbody>
-  </table>
-
-  <br><br>
-
-  <div class="row">
-    <div class="col-md-4">
-  <button class="btn btn-outline-success" onclick="saveAsPNG()">
-    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-save" viewBox="0 0 16 16">
-      <path d="M2 1a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H9.5a1 1 0 0 0-1 1v7.293l2.646-2.647a.5.5 0 0 1 .708.708l-3.5 3.5a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L7.5 9.293V2a2 2 0 0 1 2-2H14a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2h2.5a.5.5 0 0 1 0 1z"/>
-    </svg>
-    Zapisz jako PNG</button>
-    <br><br>
+  </table>    
     </div>
-    <div class="col-md-4">
-      <button class="btn btn-outline-success" onclick="clearOrbits()">
-        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eraser-fill" viewBox="0 0 16 16">
-          <path d="M8.086 2.207a2 2 0 0 1 2.828 0l3.879 3.879a2 2 0 0 1 0 2.828l-5.5 5.5A2 2 0 0 1 7.879 15H5.12a2 2 0 0 1-1.414-.586l-2.5-2.5a2 2 0 0 1 0-2.828zm.66 11.34L3.453 8.254 1.914 9.793a1 1 0 0 0 0 1.414l2.5 2.5a1 1 0 0 0 .707.293H7.88a1 1 0 0 0 .707-.293z"/>
-        </svg>
-        Wyczyść orbity</button>
-        <br><br>
-    </div>
-    <div class="col-md-4">
-    <div class="form-check form-switch">
-      <input class="form-check-input" type="checkbox" id="orbitCheckbox" checked>
-      <label class="form-check-label" for="flexSwitchCheckChecked">Włącz/wyłącz orbity</label>
-    </div>
-    <br><br>
-    </div>
+    
   </div>
-      
-    </div>
-  </div>
-  <br><br>
 </div>
-
+</div>
   <footer class="footer mt-auto py-3 bg-dark">
     <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.0);">
       © 2024 Copyright: Kacper Tracz
     </div>
   </footer>
 
-  <script src="../js/client.js" defer></script>
-  <script src="../js/simulation.js" defer></script>
+  
+  <script src="../js/simulation.js"></script>
 </body>
 </html>

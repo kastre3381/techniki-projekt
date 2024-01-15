@@ -19,13 +19,8 @@ client.connect()
 
 const isAuthenticated = require('../middleware/authMiddleware');
 
-// Route to get user authentication status
-
-
-
 
 router.get('/authStatus', isAuthenticated, (req, res) => {
-  // Send the authentication status to the client
   const username = req.session.user ? req.session.user.username : null;
   res.json({ isAuthenticated: true, username: username });
 });
@@ -35,13 +30,11 @@ router.get('/', (req, res) => {
 });
 
 router.get('/logout', isAuthenticated, (req, res) => {
-  // Destroy the session to log out
   req.session.destroy((err) => {
     if (err) {
       console.error('Error destroying session:', err);
       res.status(500).json({ error: 'Internal Server Error' });
     } else {
-      // Send JSON response indicating successful logout
       res.json({ success: true });
     }
   });
@@ -59,7 +52,6 @@ router.get('/register', (req, res) => {
   res.sendFile(path.join(__dirname, '..', 'public', 'html', 'register.html'));
 });
 
-// routes.js
 router.post('/login', async (req, res) => {
   const { username, password } = req.body;
 
@@ -67,11 +59,9 @@ router.post('/login', async (req, res) => {
     const result = await client.query('SELECT * FROM ti.user WHERE username = $1 AND passwd = $2', [username, password]);
 
     if (result.rows.length > 0) {
-      // User is authenticated, redirect to the main page
       req.session.user = { username: username };
       res.redirect('/');
     } else {
-      // Authentication failed, redirect to the login page
       res.redirect('/login');
     }
   } catch (error) {
@@ -88,16 +78,11 @@ router.post('/register', async (req, res) => {
     const result = await client.query('SELECT * FROM ti.user WHERE username = $1', [username]);
 
     if (result.rows.length > 0) {
-      // Username already taken, redirect to the registration page
+      // res.json({success: false});
       res.redirect('/register');
     } else {
-      // Registration successful, redirect to the main page
       await client.query('INSERT INTO ti.user(username, passwd) VALUES($1, $2)', [username, password]);
       req.session.user = { username: username };
-    //   const token = jwt.sign({ id: username }, "kochampieski2", {
-    //     expiresIn: 600000,
-    // });
-    //   res.cookie("token", token).json({ success: true, message: 'User registered successfully' })
       res.redirect('/');
     }
   } catch (error) {
@@ -106,5 +91,29 @@ router.post('/register', async (req, res) => {
   }
 });
 
+router.get('/getOption', isAuthenticated, async (req, res) => {
+  try{
+    const resultat = await client.query('SELECT * FROM ti.data WHERE username = $1', [req.session.user.username]);
+    console.log('res: ', resultat.rows);
+    return res.json({success: true, data: resultat.rows});
+  }
+  catch (error) {
+    console.log(error);
+    return res.status(500).json({ "error": error });
+}
+})
+
+router.post('/saveOption', isAuthenticated, async (req, res) => {
+  try {
+      if(req.body.orbitCheckbox == 'on') req.body.orbitCheckbox = true;
+      else req.body.orbitCheckbox = false;
+      console.log('saving to db: ', req.body);
+      await client.query('INSERT INTO ti.data(username, speedVal, showOrbit) VALUES($1, $2, $3)', [req.session.user.username, req.body.speedVal, req.body.orbitCheckbox]);
+      res.redirect('/simulation');
+    } catch (error) {
+      console.log(error);
+      return res.status(500).json({ "error": error });
+  }
+});
 
 module.exports = router;

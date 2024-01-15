@@ -1,0 +1,18 @@
+<div class="text-center">
+<div class="form-check form-switch">
+    <input class="form-check-input" type="checkbox" id="orbitCheckbox" name="orbitCheckbox" checked>
+    <label class="form-check-label" for="showOrbit">Włącz/wyłącz orbity</label>
+  </div>
+
+  <label for="speedVal">Intensywność symulacji: <strong id="intensityVal">1</strong> </label>
+  <input
+type="range"
+class="form-range"
+id="speedVal"
+name="speedVal"
+min="0.0"
+max="5.0"
+step="0.01"
+value="1.0"
+onchange="updateIntensity()">
+</div>

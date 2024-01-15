@@ -17,6 +17,10 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', routes);
 
+app.get('/', function (req, res) {
+  res.sendFile(__dirname + '/public/html/index.html');
+})
+
 app.listen(port, () => {
   console.log(`Server is running at http://localhost:${port}`);
 });

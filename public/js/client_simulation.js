@@ -1,77 +1,89 @@
-document.addEventListener('DOMContentLoaded', () => {
-    checkAuthStatus(); // Check authentication status on page load
-  
-    // Function to check authentication status
-    async function checkAuthStatus() {
-        try {
-          const response = await fetch('/authStatus');
-          const data = await response.json();
-          console.log('Authentication status:', data);
-    
-          // Update UI based on authentication status
-          updateUI(data.isAuthenticated);
-        } catch (error) {
-          console.error('Error checking authentication status:', error);
-          
-          // Handle the case when authentication status cannot be checked
-          updateUI(false);
+fetch('http://localhost:3000/authStatus', {
+  credentials: 'include'
+})
+  .then(response => {
+    if (response.status === 200) {
+      response.json().then(data => {
+        if (data.isAuthenticated === true) {
+            hideLoginLogout();
+            showSimulationLoggedIn();
+            updateListOfOptions();
+            console.log("Użytkownik zalogowany");
+        } else {
+            showLoginLogout();
+            showSimulationLoggedOut();
+            console.log("Użytkownik niezalogowany");
         }
-      }
-  
-    // Function to update UI based on authentication status
-    function updateUI(isAuthenticated) {
-      // Get button and content elements
-      const loginButton = document.getElementById('loginButton');
-      const registerButton = document.getElementById('registerButton');
-      const logoutButton = document.getElementById('logoutButton');
-      console.log('loginButton:', loginButton);
-      console.log('registerButton:', registerButton);
-      console.log('logoutButton:', logoutButton);
-
-      if (isAuthenticated) {
-        // User is authenticated, show logout button and logged-in content
-        loginButton.style.display = 'none';
-        registerButton.style.display = 'none';
-        logoutButton.style.display = 'block';
-      } else {
-        // User is not authenticated, show login and register buttons and logged-out content
-        loginButton.style.display = 'block';
-        registerButton.style.display = 'block';
-        logoutButton.style.display = 'none';
-      }
+      });
+    } else {
+        console.log("Błąd podczas żądania do /authStatus");
+        showLoginLogout();
+        showSimulationLoggedOut();
     }
-
-    function saveImageToDatabase() {
-      const canvas = document.getElementById("solarSystemCanvas");
-      const dataURL = canvas.toDataURL("image/png");
-    
-      // Wyślij obrazek na serwer przy użyciu żądania HTTP POST
-      fetch("/saveImage", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ image: dataURL }),
-      })
-        .then((response) => response.json())
-        .then((data) => {
-          console.log(data.message);
-        })
-        .catch((error) => {
-          console.error("Błąd podczas zapisywania obrazka:", error);
-        });
-    }
-
-    window.logout = async function logout() {
-        try {
-          const response = await fetch('/logout');
-          const data = await response.json();
-          console.log('Logout response:', data);
-    
-          // Redirect to home page after logout
-          window.location.href = '/';
-        } catch (error) {
-          console.error('Error logging out:', error);
-        }
-      };
+  })
+  .catch((error) => {
+    console.error('Błąd:', error);
   });
+
+function saveToDatabase()
+{
+    var option = {
+      speed: document.getElementById('speedVal').value,
+      orbit: document.getElementById('orbitCheckbox').checked
+    };
+
+    fetch('/saveOption', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(option)
+    }).catch(err => {
+    console.log(err);
+  });
+  updateListOfOptions();
+}
+
+function updateListOfOptions()
+{
+  fetch('/getOption', {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+    }
+  })
+    .then(response => response.json())
+    .then(data => {
+      var select = document.getElementById("selectForOptions");
+      select.innerHTML = '';
+      var defaultOption = document.createElement('option');
+      defaultOption.value = '';
+      defaultOption.textContent = 'Wybierz parametry animacji, które zapisałeś w bazie';
+      defaultOption.disabled = true;
+      defaultOption.selected = true;
+      select.appendChild(defaultOption);
+      if (data.success) {
+        data.data.forEach(profile => {
+          var option = document.createElement('option');
+          option.value = `${profile.speedval},${profile.showorbit}`;
+          option.textContent = `Szybkość: ${profile.speedval}, pokaż orbity: ${profile.showorbit}`;
+          select.appendChild(option);
+        });
+      } else {
+        alert('Błąd danych!');
+      }
+    }).catch(err => {
+  console.log(err);
+});
+}
+
+window.logout = async function logout() {
+try {
+  const response = await fetch('/logout');
+  const data = await response.json();
+  console.log('Logout response:', data);
+  redirect('/');
+} catch (error) {
+  console.error('Error logging out:', error);
+}
+};  
