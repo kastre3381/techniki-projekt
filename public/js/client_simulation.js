@@ -1,4 +1,4 @@
-fetch('http://localhost:3000/authStatus', {
+fetch('/authStatus', {
   credentials: 'include'
 })
   .then(response => {
@@ -31,6 +31,7 @@ function saveToDatabase()
       speed: document.getElementById('speedVal').value,
       orbit: document.getElementById('orbitCheckbox').checked
     };
+
 
     fetch('/saveOption', {
       method: 'POST',

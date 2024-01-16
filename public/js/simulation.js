@@ -179,7 +179,7 @@ function updateIntensity(id1, id2) {
   ctx.fillRect(0, 0, canvas.width, canvas.height);
   drawStars();
 
-document.addEventListener("DOMContentLoaded", function() {
+  document.addEventListener("DOMContentLoaded", function() {
 
   intensityVal = document.getElementById("intensityVal");
 
@@ -238,7 +238,7 @@ function drawSun()
 function movePlanets()
 {
   planets.slice(1).forEach(planet => {
-    planet.angle = (planet.angle || 0) + planet.speed*intensity;
+    planet.angle = (planet.angle || 0) + planet.speed*intensityVal;
   });
 }
 
@@ -310,6 +310,7 @@ function draw() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   ctx.fillStyle = "black";
   ctx.fillRect(0, 0, canvas.width, canvas.height);
+  
   drawStars(); 
 
     moveStars();

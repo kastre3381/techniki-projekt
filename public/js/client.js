@@ -1,4 +1,4 @@
-fetch('http://localhost:3000/authStatus', {
+fetch('/authStatus', {
   credentials: 'include'
 })
   .then(response => {
