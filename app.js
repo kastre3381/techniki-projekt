@@ -22,5 +22,5 @@ app.get('/', function (req, res) {
 })
 
 app.listen(port, () => {
-  console.log(`Server is running at http://pascal:${port}`);
+  console.log(`Server is running in lab classroom http://pascal:${port} or locally at http://localhost:${port}`);
 });
