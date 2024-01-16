@@ -59,6 +59,8 @@ function generateStars() {
   }
 }
 
+var angle = 0.0;
+
 function drawStars() {
   stars.forEach(star => {
     ctx.beginPath();
@@ -72,8 +74,12 @@ function drawStars() {
 function moveStars() {
   stars.forEach(star => {
     star.x -= 0.4;
+    star.y -= 0.1;
     if (star.x < 0) {
       star.x = canvas.width;
+    }
+    if (star.y < 0) {
+      star.y = canvas.height;
     }
   });
 }
@@ -81,16 +87,18 @@ function moveStars() {
 
 var min = canvas.width < canvas.height ? canvas.width : canvas.height;
 
+const twoPI = Math.PI;
+
 const planets = [
-  { polos_mala: null, odl_field: null, polos_duza: null, radius: min/30, distance: 0, speed: 0.01, name: "Sun", orbit: null},
-  { polos_mala: 0.39, odl_field: 'odl_merkury', polos_duza: 0.47, radius: min/150, distance: min/2 * 0.15, speed: 0.03, name: "Mercury", orbit: [] },
-  { polos_mala: 0.72, odl_field: 'odl_wenus', polos_duza: 0.72, radius: min/120, distance: min/2 * 0.20, speed: 0.02, name: "Venus", orbit: [] },
-  { polos_mala: 1, odl_field: 'odl_ziemia', polos_duza: 1.0, radius: min/100, distance: min/2 * 0.27, speed: 0.015, name: "Earth", orbit: [] },
-  { polos_mala: 1.38, odl_field: 'odl_mars', polos_duza: 1.67, radius: min/120, distance: min/2 * 0.35, speed: 0.01, name: "Mars", orbit: [] },
-  { polos_mala: 4.95, odl_field: 'odl_jowisz', polos_duza: 5.46, radius: min/50, distance: min/2 * 0.48, speed: 0.006, name: "Jupiter", orbit: [] },
-  { polos_mala: 9.05, odl_field: 'odl_saturn', polos_duza: 10.12, radius: min/60, distance: min/2 * 0.65, speed: 0.004, name: "Saturn", orbit: [] },
-  { polos_mala: 18.37, odl_field: 'odl_uran', polos_duza: 20.11, radius: min/100, distance: min/2 * 0.82, speed: 0.003, name: "Uranus", orbit: [] },
-  { polos_mala: 29.74, odl_field: 'odl_neptun', polos_duza: 30.44, radius: min/100, distance: min/2 * 0.95, speed: 0.002, name: "Neptune", orbit: [] },
+  { angle: twoPI*0.1, polos_mala: null, odl_field: null, polos_duza: null, radius: min/30, distance: 0, speed: 0.01, name: "Sun", orbit: null},
+  { angle: twoPI*0.9, polos_mala: 0.39, odl_field: 'odl_merkury', polos_duza: 0.47, radius: min/150, distance: min/2 * 0.15, speed: 0.03, name: "Mercury", orbit: [] },
+  { angle: twoPI*0.4, polos_mala: 0.72, odl_field: 'odl_wenus', polos_duza: 0.72, radius: min/120, distance: min/2 * 0.20, speed: 0.02, name: "Venus", orbit: [] },
+  { angle: twoPI*0.2, polos_mala: 1, odl_field: 'odl_ziemia', polos_duza: 1.0, radius: min/100, distance: min/2 * 0.27, speed: 0.015, name: "Earth", orbit: [] },
+  { angle: twoPI*0.6, polos_mala: 1.38, odl_field: 'odl_mars', polos_duza: 1.67, radius: min/120, distance: min/2 * 0.35, speed: 0.01, name: "Mars", orbit: [] },
+  { angle: twoPI*0.8, polos_mala: 4.95, odl_field: 'odl_jowisz', polos_duza: 5.46, radius: min/50, distance: min/2 * 0.48, speed: 0.006, name: "Jupiter", orbit: [] },
+  { angle: twoPI*0.7, polos_mala: 9.05, odl_field: 'odl_saturn', polos_duza: 10.12, radius: min/60, distance: min/2 * 0.65, speed: 0.004, name: "Saturn", orbit: [] },
+  { angle: twoPI*0.5, polos_mala: 18.37, odl_field: 'odl_uran', polos_duza: 20.11, radius: min/100, distance: min/2 * 0.82, speed: 0.003, name: "Uranus", orbit: [] },
+  { angle: twoPI*0.3, polos_mala: 29.74, odl_field: 'odl_neptun', polos_duza: 30.44, radius: min/100, distance: min/2 * 0.95, speed: 0.002, name: "Neptune", orbit: [] },
 ];
 
 loadPlanetImages();
